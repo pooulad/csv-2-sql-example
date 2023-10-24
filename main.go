@@ -2,9 +2,11 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 
 	_ "github.com/lib/pq"
+	"github.com/savioxavier/termlink"
 
 	"github.com/pooulad/csv-2-sql-example/database"
 	"github.com/pooulad/csv-2-sql-example/reader"
@@ -42,5 +44,7 @@ func main() {
 	}
 
 	utils.Colorize(utils.ColorGreen, "Data inserted successfully!")
-	utils.Colorize(utils.ColorBlue, "\u001b[36mMade by \U0001F9E1")
+	utils.Colorize(utils.ColorBlue, "\u001b[36mMade with \U0001F9E1")
+	fmt.Println(termlink.ColorLink("Example", "https://example.com", "italic green"))
+	fmt.Println(termlink.ColorLink("Example", "https://example.com", "italic green"))
 }

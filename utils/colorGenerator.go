@@ -14,5 +14,5 @@ const (
 )
 
 func Colorize(color Color, message string) {
-	fmt.Println(string(color), message, string(ColorReset))
+	fmt.Println(message, string(ColorReset))
 }

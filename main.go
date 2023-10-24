@@ -5,30 +5,42 @@ import (
 	"log"
 
 	_ "github.com/lib/pq"
-	"github.com/pooulad/csv-2-sql-example/db"
+
+	"github.com/pooulad/csv-2-sql-example/database"
+	"github.com/pooulad/csv-2-sql-example/reader"
 	"github.com/pooulad/csv-2-sql-example/utils"
 )
 
 func main() {
-	db, err := db.ConnectDB()
+	var file, cfg string
+	flag.StringVar(&file, "file", "./username.csv", "CSV file path")
+	flag.StringVar(&cfg, "config", "./config.json", "Config file path")
+
+	flag.Parse()
+
+	if file == "" {
+		utils.Colorize(utils.ColorRed, "Please enter a valid file address!")
+		return
+	}
+
+	config, err := database.ReadConfig(cfg)
+	if err != nil {
+		utils.Colorize(utils.ColorRed, err.Error())
+		return
+	}
+
+	db, err := database.ConnectDB(config)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	exelAddressFlag := flag.String("address", "", "exelAddressFlag")
-
-	flag.Parse()
-
-	if *exelAddressFlag != "" {
-		err = utils.ReadExcelAndInsertData(db, *exelAddressFlag)
-		if err != nil {
-			log.Fatal(err)
-		}
-		utils.Colorize(utils.ColorGreen, "Data inserted successfully!")
-		utils.Colorize(utils.ColorBlue, "\u001b[36mMade by \U0001F9E1")
-	} else {
-		utils.Colorize(utils.ColorRed, "Please enter a valid address!")
+	err = reader.ReadExcelAndInsertData(db, file)
+	if err != nil {
+		utils.Colorize(utils.ColorRed, err.Error())
+		return
 	}
 
+	utils.Colorize(utils.ColorGreen, "Data inserted successfully!")
+	utils.Colorize(utils.ColorBlue, "\u001b[36mMade by \U0001F9E1")
 }

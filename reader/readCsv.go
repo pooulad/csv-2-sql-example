@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"encoding/csv"
-	"fmt"
 	"os"
 )
 
@@ -29,7 +28,6 @@ func ReadExcelAndInsertData(db *sql.DB, fileAddress string) error {
 	}
 
 	csvData := createList(data)
-	fmt.Printf("%+v\n", data[0])
 
 	tx, err := db.BeginTx(context.Background(), nil)
 	if err != nil {
@@ -64,22 +62,26 @@ func ReadExcelAndInsertData(db *sql.DB, fileAddress string) error {
 }
 
 func createList(data [][]string) []ListRecord {
-	var fianlList []ListRecord
-	for _, line := range data {
+	var finalList []ListRecord
+	for i, line := range data {
 		var rec ListRecord
-		for j, field := range line {
-			switch j {
-			case 0:
-				rec.Username = field
-			case 1:
-				rec.Identifier = field
-			case 2:
-				rec.Firstname = field
-			case 3:
-				rec.Lastname = field
+		if i == 0 {
+			continue
+		} else {
+			for j, field := range line {
+				switch j {
+				case 0:
+					rec.Username = field
+				case 1:
+					rec.Identifier = field
+				case 2:
+					rec.Firstname = field
+				case 3:
+					rec.Lastname = field
+				}
 			}
 		}
-		fianlList = append(fianlList, rec)
+		finalList = append(finalList, rec)
 	}
-	return fianlList
+	return finalList
 }

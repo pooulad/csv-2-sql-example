@@ -1,11 +1,12 @@
 package main
 
 import (
-	"exel2sql/db"
-	"exel2sql/utils"
 	"flag"
-	_ "github.com/lib/pq"
 	"log"
+
+	_ "github.com/lib/pq"
+	"github.com/pooulad/csv-2-sql-example/db"
+	"github.com/pooulad/csv-2-sql-example/utils"
 )
 
 func main() {

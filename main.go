@@ -44,7 +44,7 @@ func main() {
 	}
 
 	utils.Colorize(utils.ColorGreen, "Data inserted successfully!")
-	utils.Colorize(utils.ColorBlue, "\u001b[36mMade with \U0001F9E1")
+	utils.Colorize(utils.ColorBlue, "\u001b[36mFeel free to show your appreciation by starring this GitHub repository if you found it helpful or valuable\U0001F9E1.")
 	fmt.Println(termlink.ColorLink("Follow hossein1376", "https://github.com/hossein1376", "italic green"))
 	fmt.Println(termlink.ColorLink("Follow pooulad", "https://github.com/pooulad", "italic green"))
 }
